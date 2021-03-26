@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/on_secondary_color_curved_background"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:layout_marginBottom="8dp"
+    android:backgroundTint="@color/material_blue"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/loc_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_mostly_cloudy" />
+
+    <LinearLayout
+        android:id="@+id/loc_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@id/date_time_layout"
+        app:layout_constraintStart_toEndOf="@id/loc_image"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/alarm_state"
+            style="@style/TextViewInColoredCard"
+            android:layout_width="wrap_content"
+            android:text="Rain"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content" />
+        <TextView
+            style="@style/TextViewInColoredCard"
+            android:id="@+id/alarm_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:layout_marginBottom="2dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/date_time_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@id/alarm_man"
+        app:layout_constraintStart_toEndOf="@id/loc_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/alarm_time"
+            style="@style/TextViewInColoredCard"
+            android:layout_width="wrap_content"
+            android:text="12:00"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content" />
+        <TextView
+            style="@style/TextViewInColoredCard"
+            android:id="@+id/alarm_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30-1-2020"
+            android:layout_marginBottom="2dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/alarm_man"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/alarm_delete"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/ic_baseline_delete_24"
+            android:clickable="true"
+            android:foreground="?selectableItemBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/loc_layout"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:id="@+id/alarm_edit"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/alarm_edit"
+            android:clickable="true"
+            android:foreground="?selectableItemBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/loc_layout"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

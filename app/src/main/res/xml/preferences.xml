@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/weather_location">
+        <SwitchPreference
+            android:key="USE_DEVICE_LOCATION"
+            android:title="@string/weather_location_title"
+            android:summary="@string/weather_location_summary"
+            android:defaultValue="true"
+            android:disableDependentsState="true"/>
+
+        <Preference
+            android:key="CUSTOM_LOCATION"
+            android:title="@string/custom_weather_location_title"
+            android:summary="@string/custom_weather_location_summary"
+            android:defaultValue="Los Angeles"
+            android:dependency="USE_DEVICE_LOCATION"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/units">
+
+        <ListPreference
+            android:key="TEMP_UNIT_SYSTEM"
+            android:title="@string/temperature"
+            android:summary="%s"
+            android:defaultValue="KELVIN"
+            android:entries="@array/tempUnitSystemEntries"
+            android:entryValues="@array/tempUnitSystemValues"/>
+        <ListPreference
+            android:key="Wind_UNIT_SYSTEM"
+            android:title="@string/weather_wind"
+            android:summary="%s"
+            android:defaultValue="METRE"
+            android:entries="@array/windUnitSystemEntries"
+            android:entryValues="@array/windUnitSystemValues"/>
+    </PreferenceCategory>
+
+
+
+    <PreferenceCategory
+        android:title="@string/languages">
+
+        <ListPreference
+            android:key="LANGUAGE_UNIT_SYSTEM"
+            android:title="@string/app_language"
+            android:summary="%s"
+            android:entries="@array/languageUnitSystemEntries"
+            android:entryValues="@array/languageUnitSystemValues"/>
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/settings_title_data">
+
+        <ListPreference
+            android:defaultValue="1"
+            android:summary="%s"
+            android:entries="@array/refreshIntervals"
+            android:entryValues="@array/refreshIntervalsValues"
+            android:key="refreshInterval"
+            android:title="@string/setting_refreshInterval" />
+
+        <EditTextPreference
+            android:key="apiKey"
+            android:summary="@string/setting_apiKey_summary"
+            android:title="@string/setting_apiKey" />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

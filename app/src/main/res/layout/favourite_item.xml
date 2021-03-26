@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/roo_favourite_layout"
+    android:background="@drawable/on_secondary_color_curved_background"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:layout_marginBottom="8dp"
+    android:backgroundTint="@color/material_blue"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/loc_image"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_location_24" />
+
+    <LinearLayout
+        android:id="@+id/loc_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@id/loc_delete"
+        app:layout_constraintStart_toEndOf="@id/loc_image"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/location_city"
+            style="@style/TextViewInColoredCard"
+            android:layout_width="wrap_content"
+            android:text="Sharkia"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content" />
+        <TextView
+            style="@style/TextViewInColoredCard"
+            android:id="@+id/location_rest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="abukabir"
+            android:layout_marginBottom="2dp" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/loc_delete"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/loc_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="4dp"
+        android:clickable="true"
+        android:foreground="?selectableItemBackground"
+        android:background="@drawable/ic_baseline_delete_24"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

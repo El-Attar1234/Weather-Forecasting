@@ -1,0 +1,82 @@
+<resources>
+    <string name="app_name">Weather Forecast</string>
+    <string name="today_string">Today</string>
+    <string name="seven_days">Future forecast</string>
+    <string name="hourly_forcast">Hourly forecast</string>
+    <string name="settings_value">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="alarm_string">alrms</string>
+    <string name="favourites">Favourites</string>
+    <string name="charts">Charts</string>
+    <string name="weather_description">Description</string>
+    <string name="weather_temp">Temp</string>
+    <string name="weather_feel_likes">Feel likes</string>
+    <string name="weather_presuure">Pressure</string>
+    <string name="weather_humidity">Humidity</string>
+    <string name="weather_visibility">Visibilty</string>
+    <string name="weather_wind">Wind_speed</string>
+    <string name="current_label">Current Weather</string>
+    <string name="AddAlarm">Add Alarm</string>
+    <string name="updateAlarm">Update Alarm</string>
+    <string name="alarm_description">ِAlarm Description</string>
+    <string name="alarm_date">ِDate : </string>
+    <string name="alarm_time">ِTime: </string>
+    <string name="alarm_weather_case">ِWeather Case</string>
+
+    <string name="alarm_rain">ٌِRain</string>
+    <string name="alarm_temp">ِTemperature</string>
+    <string name="alarm_wind">ِWind</string>
+    <string name="alarm_fog">ِFog</string>
+    <string name="alarm_snow">ِSnow</string>
+    <string name="alarm_cloud">ِCloudness</string>
+    <string name="alarm_thunderstorm">Thunderstorm</string>
+
+    <string name="cityName">cairo</string>
+    <string name="loading">loading..</string>
+    <string name="radar">Radar</string>
+    <string name="addAlarm">Add Alarm</string>
+    <string name="addFav">Add place</string>
+    <string name="alarm_list">Alarm List</string>
+
+    <string name="rain">Rain</string>
+    <string name="temperature">Temperature</string>
+    <string name="clouds">Clouds</string>
+    <string name="wind">wind</string>
+
+
+    <string name="settings_title_data">Data</string>
+    <string name="setting_apiKey">API key</string>
+    <string name="setting_apiKey_summary">Custom API key for OpenWeatherMap queries</string>
+    <string name="settings_none">None</string>
+    <string name="settings_15min">15 min</string>
+    <string name="settings_30min">30 min</string>
+    <string name="settings_1hour">1 h</string>
+    <string name="settings_2hour">2 h</string>
+    <string name="settings_6hour">6 h</string>
+    <string name="settings_12hour">12 h</string>
+    <string name="settings_24hour">24 h</string>
+    <string name="setting_refreshInterval">Background refresh interval</string>
+
+    <string name="weather_location">Weather Location</string>
+    <string name="weather_location_title">Use Gps Location</string>
+    <string name="weather_location_summary">Allow the app to get your location</string>
+
+    <string name="custom_weather_location_title">Select Custom Location</string>
+    <string name="custom_weather_location_summary">press to open map to select custom location</string>
+
+    <string name="units">Units</string>
+    <string name="languages">Languages</string>
+    <string name="app_language">App Language</string>
+
+    <string name="settings_label">App Settings</string>
+    <string name="today_label">Today</string>
+
+    <string name="delete_label">"Do you want to delete this item?"</string>
+    <string name="ok_label">"Yes"</string>
+    <string name="no_label">"No"</string>
+
+    <string name="weather_statistics">"ًWeather Statistics"</string>
+
+</resources>

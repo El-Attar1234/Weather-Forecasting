@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">التوقعات الجويه</string>
+    <string name="today_string">اليوم</string>
+    <string name="seven_days">الاسبوع القادم</string>
+    <string name="settings_value">الاعدادات</string>
+    <string name="hello_blank_fragment">فارغه</string>
+    <string name="title_activity_maps">الخريطه</string>
+    <string name="alarm_string">المنبه</string>
+    <string name="favourites">المفضله</string>
+    <string name="charts">الاحصائيات</string>
+    <string name="weather_description">وصف الطقس</string>
+    <string name="weather_temp">درجةالحراره</string>
+    <string name="weather_feel_likes">الشعور الحقيقي</string>
+    <string name="weather_presuure">الضغط</string>
+    <string name="weather_humidity">الرطوبه</string>
+    <string name="weather_visibility">الرؤيه</string>
+    <string name="weather_wind">سرعة الرياح</string>
+    <string name="current_label">الطقس الحالي</string>
+    <string name="hourly_forcast">الطقس لكل ساعه</string>
+    <string name="AddAlarm">اضافة منبه</string>
+    <string name="updateAlarm">تعديل المنبه</string>
+    <string name="loading">جاري التحميل..</string>
+    <string name="alarm_description">وصف الحاله</string>
+    <string name="alarm_date">التاريخ : </string>
+    <string name="alarm_time">ِالوقت : </string>
+    <string name="alarm_weather_case">ِحالة الطقس</string>
+
+    <string name="alarm_rain">المطر</string>
+    <string name="alarm_temp">ِالحراره</string>
+    <string name="alarm_wind">الرياح</string>
+    <string name="alarm_fog">ِالضباب</string>
+    <string name="alarm_snow">ِالثلج</string>
+    <string name="alarm_cloud">ِالسحاب</string>
+    <string name="alarm_thunderstorm">العاصفه الرعديه</string>
+    <string name="cityName">القاهره</string>
+    <string name="radar">الرادار</string>
+    <string name="addAlarm">اضافة منبه</string>
+    <string name="addFav">اضافة مكان</string>
+    <string name="alarm_list">قائمة المنبهات</string>
+
+
+
+
+    <string name="rain">المطر</string>
+    <string name="temperature">درجة الحراره</string>
+    <string name="clouds">السحاب</string>
+    <string name="wind">الرياح</string>
+
+    <string name="settings_title_data">استرجاع البيانات</string>
+    <string name="setting_apiKey">رمز الموقع</string>
+    <string name="setting_apiKey_summary">الرمز الشخصي المستخدم لاسترجاع الدات</string>
+    <string name="settings_none">ايقاف التحديث التلقائي</string>
+    <string name="settings_15min">ربع ساعه</string>
+    <string name="settings_30min">نصف ساعه</string>
+    <string name="settings_1hour">ساعه</string>
+    <string name="settings_2hour">ساعتين</string>
+    <string name="settings_6hour">ست ساعات</string>
+    <string name="settings_12hour">نصف يوم</string>
+    <string name="settings_24hour">يوم</string>
+    <string name="setting_refreshInterval">التحديث التلقائي</string>
+
+    <string name="weather_location">موقع الطقس</string>
+    <string name="weather_location_title">استخدام موقعك الحالي</string>
+    <string name="weather_location_summary">السماح للتطبيق باستخدام موقعك الحالي</string>
+
+    <string name="custom_weather_location_title">اختيار موقع محدد</string>
+    <string name="custom_weather_location_summary">اضغط لاختيار موقع من الخريطه</string>
+
+    <string name="units">وحدات القياس</string>
+    <string name="languages">اللغات</string>
+    <string name="app_language">لغة التطبيق</string>
+    <string name="settings_label">اعدادات التطبيق</string>
+    <string name="today_label">اليوم</string>
+
+    <string name="delete_label">"هل تود مسح هذا العنصر"</string>
+    <string name="ok_label">"نعم"</string>
+    <string name="no_label">"لا"</string>
+    <string name="weather_statistics">"احصائيات الطقس"</string>
+
+</resources>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/currentWeatherFragment">
+
+    <fragment
+        android:id="@+id/currentWeatherFragment"
+        android:name="com.example.forecasting.ui.weather.current.CurrentWeatherFragment"
+        android:label="current_weather"
+        tools:layout="@layout/current_weather_fragment" >
+        <action
+            android:id="@+id/detailsAction"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/radarActivityAction"
+            app:destination="@id/radarActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.forecasting.ui.settings.SettingsFragment"
+        android:label="Settings" />
+    <fragment
+        android:id="@+id/alarmFragment"
+        android:name="com.example.forecasting.ui.alarm.alarm_list.AlarmFragment"
+        android:label="alarm_fragment"
+        tools:layout="@layout/alarm_fragment" >
+        <action
+            android:id="@+id/alarmSettingsAction"
+            app:destination="@id/alarmSettingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouriteFragment"
+        android:name="com.example.forecasting.ui.favourite.FavouriteFragment"
+        android:label="favourite_fragment"
+        tools:layout="@layout/favourite_fragment" >
+        <action
+            android:id="@+id/favouriteDetailsAction"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.forecasting.ui.design.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="type"
+            app:argType="integer" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+        <argument
+            android:name="cityId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/alarmSettingsFragment"
+        android:name="com.example.forecasting.ui.alarm.alarm_seetings.AlarmSettingsFragment"
+        android:label="fragment_alarm_settings"
+        tools:layout="@layout/fragment_alarm_settings" >
+        <argument
+            android:name="alarm_id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/alarmListActions"
+            app:destination="@id/alarmFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment2"
+        android:name="com.example.forecasting.ui.about.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/weatherRadarFragment"
+        android:name="com.example.forecasting.ui.weather_radar.WeatherRadarFragment"
+        android:label="Radar"
+        tools:layout="@layout/fragment_weather_radar" />
+    <action android:id="@+id/radarGlobalAction"
+        app:destination="@id/weatherRadarFragment"
+        app:enterAnim="@anim/slide_in_top"
+        app:exitAnim="@anim/slide_out_bottom"
+        app:popEnterAnim="@anim/slide_in_bottom"
+        app:popExitAnim="@anim/slide_out_top"/>
+    <action android:id="@+id/aboutGlobalAction"
+        app:destination="@id/aboutFragment2"
+        app:enterAnim="@anim/slide_in_top"
+        app:exitAnim="@anim/slide_out_bottom"
+        app:popEnterAnim="@anim/slide_in_bottom"
+        app:popExitAnim="@anim/slide_out_top"/>
+    <activity
+        android:id="@+id/radarActivity"
+        android:name="com.example.forecasting.ui.weather_radar.RadarActivity"
+        android:label="activity_radar"
+        tools:layout="@layout/activity_radar" />
+    <action android:id="@+id/addNewAlarm" app:destination="@id/alarmSettingsFragment" />
+</navigation>

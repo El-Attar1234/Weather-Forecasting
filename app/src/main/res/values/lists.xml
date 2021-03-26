@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="unitSystemValues">
+        <item>METRIC</item>
+        <item>IMPERIAL</item>
+    </string-array>
+
+    <string-array name="unitSystemEntries">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+
+
+    <string-array name="tempUnitSystemValues">
+        <item>CELSIUS</item>
+        <item>KELVIN</item>
+        <item>FAHRENHIT</item>
+    </string-array>
+
+    <string-array name="tempUnitSystemEntries">
+        <item>Celsius</item>
+        <item>Kelvin</item>
+        <item>Fahrenhite</item>
+    </string-array>
+
+
+    <string-array name="windUnitSystemValues">
+        <item>METRE</item>
+        <item>KILOMETRE</item>
+        <item>MILE</item>
+    </string-array>
+
+    <string-array name="windUnitSystemEntries">
+        <item>m/s</item>
+        <item>km/hr</item>
+        <item>mi/hr</item>
+    </string-array>
+
+
+    <string-array name="languageUnitSystemValues">
+        <item>ARABIC</item>
+        <item>ENGLISH</item>
+    </string-array>
+
+    <string-array name="languageUnitSystemEntries">
+        <item>اللغه العربيه</item>
+        <item>English</item>
+    </string-array>
+
+    <string-array name="refreshIntervals">
+        <item name="none">@string/settings_none</item>
+        <item name="15">@string/settings_15min</item>
+        <item name="30">@string/settings_30min</item>
+        <item name="1">@string/settings_1hour</item>
+        <item name="2">@string/settings_2hour</item>
+        <item name="6">@string/settings_6hour</item>
+        <item name="12">@string/settings_12hour</item>
+        <item name="24">@string/settings_24hour</item>
+    </string-array>
+    <string-array name="refreshIntervalsValues">
+        <item name="none">0</item>
+        <item name="15">15</item>
+        <item name="30">30</item>
+        <item name="1">1</item>
+        <item name="2">2</item>
+        <item name="6">6</item>
+        <item name="12">12</item>
+        <item name="24">24</item>
+    </string-array>
+
+
+
+</resources>

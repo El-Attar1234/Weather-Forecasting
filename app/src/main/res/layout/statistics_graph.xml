@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_bollywood"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/temp_graph" />
+
+    <ImageView
+        android:id="@+id/iv_hollywood"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_alignLeft="@+id/iv_bollywood"
+        android:layout_below="@+id/iv_bollywood"
+        android:src="@drawable/rain_graph" />
+
+    <ImageView
+        android:id="@+id/iv_animated"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_alignLeft="@+id/iv_hollywood"
+        android:layout_below="@+id/iv_hollywood"
+        android:src="@drawable/wind_graph" />
+
+    <ImageView
+        android:id="@+id/iv_hindhi_dub"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_alignLeft="@+id/iv_animated"
+        android:layout_below="@+id/iv_animated"
+        android:src="@drawable/humidity_graph" />
+
+    <ImageView
+        android:id="@+id/iv_other"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_alignLeft="@+id/iv_hindhi_dub"
+        android:layout_below="@+id/iv_hindhi_dub"
+        android:src="@drawable/pressure_graph" />
+
+</RelativeLayout>
+</ScrollView>
