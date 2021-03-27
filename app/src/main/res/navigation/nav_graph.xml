@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.example.forecasting.ui.design.DetailsFragment"
+        android:name="com.example.forecasting.ui.weather_details.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
         <argument

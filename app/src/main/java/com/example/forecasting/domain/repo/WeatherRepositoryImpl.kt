@@ -1,38 +1,29 @@
-package com.example.forecasting.data.repository
+package com.example.forecasting.domain.repo
 
 import android.content.Context
-import android.location.Address
-import android.location.Geocoder
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.forecasting.data.local_db.dao.CurrentWeatherDao
 import com.example.forecasting.data.local_db.dao.FavouriteDao
-import com.example.forecasting.data.local_db.dao.FutureWeatherDao
 import com.example.forecasting.data.local_db.entity.CurrentweatherResponse
-import com.example.forecasting.data.local_db.entity.Day
 import com.example.forecasting.data.local_db.entity.FavouriteWeatherResponse
-import com.example.forecasting.data.local_db.entity.FutureWeatherResponse
 import com.example.forecasting.data.network.data_source.WeatherDataSource
-import com.example.forecasting.data.provider.LocationProvider
-import com.example.forecasting.ui.alarm.AlarmDao
-import com.example.forecasting.ui.alarm.AlarmEntity
+import com.example.forecasting.domain.use_case.provider.location.LocationProvider
+import com.example.forecasting.data.local_db.dao.AlarmDao
+import com.example.forecasting.data.local_db.entity.AlarmEntity
+import com.example.forecasting.data.local_db.local_data_source.LocalDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDate
 import org.threeten.bp.ZonedDateTime
-import java.io.IOException
 
 class WeatherRepositoryImpl(
     private val context: Context,
     private val weatherDataSource: WeatherDataSource,
-    private val alarmDao: AlarmDao,
-    private val currentWeatherDao: CurrentWeatherDao,
-    private val favouriteDao: FavouriteDao,
+    private val localDataSource: LocalDataSource,
     private val locationProvider: LocationProvider
 ) : WeatherRepository {
     val appContext = context.applicationContext
@@ -41,23 +32,16 @@ class WeatherRepositoryImpl(
     init {
         weatherDataSource.downloadedCurrentWeather.observeForever { observer ->
             GlobalScope.launch(Dispatchers.IO) {
-                Log.i("debug", "inside observer data source$observer")
-                currentWeatherDao.insertCurrentWeather(observer)
-                Log.i("debug", "after insert")
+                localDataSource.currentDao().insertCurrentWeather(observer)
             }
 
         }
         weatherDataSource.downloadedFavouriteWeather.observeForever { observer ->
             GlobalScope.launch(Dispatchers.IO) {
-                Log.i("favourite1", "after observing from api")
-                Log.i("favourite1", "before insert")
                 observer.cityID = "${observer.lat}=#=${observer.lon}"
-                Log.i("favourite1", "prepare cityId ${observer.cityID}")
-                  val myfavObject:FavouriteWeatherResponse=observer
+                val myfavObject: FavouriteWeatherResponse = observer
                 if (observer is FavouriteWeatherResponse) {
-                    Log.i("favourite1", "after insert1")
-                    favouriteDao.insertFavouriteWeather(observer)
-                    Log.i("favourite1", "after insert2")
+                    localDataSource.favDao().insertFavouriteWeather(observer)
                 }
             }
 
@@ -72,10 +56,7 @@ class WeatherRepositoryImpl(
             val long = locationProvider.getFavLong()
             if (isNetworkAvailable(appContext)) {
                 if (lat == (-1).toString() || long == (-1).toString()) {
-
-                    Log.i("favourite1", "inside repo -1")
                 } else {
-                    Log.i("favourite1", "inside repo not -1")
                     weatherDataSource.fetchFavouriteWeather(
                         lat,
                         long,
@@ -84,14 +65,13 @@ class WeatherRepositoryImpl(
                 }
             }
 
-            Log.i("favourite1", "inside repo after fetch from api")
-            return@withContext favouriteDao.getAllFavourites()
+            return@withContext localDataSource.favDao().getAllFavourites()
         }
 
     }
 
     override fun getFavouiteLocation(id: String): FavouriteWeatherResponse {
-        return favouriteDao.getFavouriteLocation(id)
+        return localDataSource.favDao().getFavouriteLocation(id)
     }
 
 
@@ -100,8 +80,7 @@ class WeatherRepositoryImpl(
             if (isNetworkAvailable(appContext)) {
                 firstNeedForCurrentweatherData()
             }
-            Log.i("debug", ": inside repo" + currentWeatherDao.getCurrentWeatherResponse().value)
-            return@withContext currentWeatherDao.getCurrentWeatherResponse()
+            return@withContext localDataSource.currentDao().getCurrentWeatherResponse()
         }
 
     }
@@ -109,7 +88,8 @@ class WeatherRepositoryImpl(
     ///here managing the settings and decide to call api or not
     private suspend fun firstNeedForCurrentweatherData() {
 
-        val myObjectInDataBase = currentWeatherDao.getCurrentWeatherResponseWithoutLiveData()
+        val myObjectInDataBase =
+            localDataSource.currentDao().getCurrentWeatherResponseWithoutLiveData()
         if (myObjectInDataBase == null || locationProvider.hasLocationChanged(myObjectInDataBase) ||
             isFetchCurrentNeeded(myObjectInDataBase.zonedDateTime) || locationProvider.hasLanguageChanged()
         ) {
@@ -133,31 +113,31 @@ class WeatherRepositoryImpl(
 
 
     override suspend fun getAllAlarms(): List<AlarmEntity> {
-        return alarmDao.getAllAlarms()
+        return localDataSource.alarmDao().getAllAlarms()
     }
 
     override suspend fun insertAlarm(alarmEntity: AlarmEntity): Long {
-        return alarmDao.insertAlarm(alarmEntity)
+        return localDataSource.alarmDao().insertAlarm(alarmEntity)
     }
 
     override fun deleteAlarm(id: Int) {
-        alarmDao.deleteAlarm(id)
+        localDataSource.alarmDao().deleteAlarm(id)
     }
 
     override fun getCurrentWeatherResponseWithoutLiveData(): CurrentweatherResponse {
-        return currentWeatherDao.getCurrentWeatherResponseWithoutLiveData()
+        return localDataSource.currentDao().getCurrentWeatherResponseWithoutLiveData()
     }
 
     override fun getAlarmById(id: Int): AlarmEntity {
-        return alarmDao.getAlarmById(id)
+        return localDataSource.alarmDao().getAlarmById(id)
     }
 
     override fun getAllFavouritesWithoutLiveData(): List<FavouriteWeatherResponse> {
-        return favouriteDao.getAllFavouritesWithoutLiveData()
+        return localDataSource.favDao().getAllFavouritesWithoutLiveData()
     }
 
     override fun deleteFavouriteLocation(id: String) {
-        favouriteDao.deleteFavouriteLocation(id)
+        localDataSource.favDao().deleteFavouriteLocation(id)
     }
 
 }

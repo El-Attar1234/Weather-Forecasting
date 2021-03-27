@@ -1,4 +1,4 @@
-package com.example.forecasting.data.provider
+package com.example.forecasting.domain.use_case.provider.location
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -11,9 +11,7 @@ import androidx.core.app.ActivityCompat
 
 import androidx.preference.PreferenceManager
 import com.example.forecasting.data.local_db.entity.CurrentweatherResponse
-import com.example.forecasting.data.provider.enums.LanguageUnitSystem
-import com.example.forecasting.data.provider.enums.TempUnitSystem
-import com.example.forecasting.data.provider.enums.WindUnitSystem
+import com.example.forecasting.domain.use_case.enums.LanguageUnitSystem
 import com.example.forecasting.utilities.LocationPermissionNotGrantedException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.tasks.Task

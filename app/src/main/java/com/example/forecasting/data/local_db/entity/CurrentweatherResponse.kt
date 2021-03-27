@@ -17,7 +17,6 @@ data class CurrentweatherResponse(
     val lat: Double,
     val lon: Double,
     val timezone: String,
-    val timezone_offset:Int,
     @Embedded(prefix = "current_")
     val current: Current,
     val daily:ArrayList<Day>,

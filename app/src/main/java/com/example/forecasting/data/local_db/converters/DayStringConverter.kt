@@ -2,7 +2,7 @@ package com.example.forecasting.data.local_db.converters
 
 import androidx.room.TypeConverter
 import com.example.forecasting.data.local_db.entity.Day
-import com.example.forecasting.data.local_db.entity.FutureWeatherResponse
+
 import com.example.forecasting.data.local_db.entity.Weather
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

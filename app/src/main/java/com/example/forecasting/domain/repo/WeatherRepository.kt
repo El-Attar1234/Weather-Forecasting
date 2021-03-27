@@ -1,12 +1,9 @@
-package com.example.forecasting.data.repository
+package com.example.forecasting.domain.repo
 
 import androidx.lifecycle.LiveData
-import androidx.room.Query
 import com.example.forecasting.data.local_db.entity.CurrentweatherResponse
-import com.example.forecasting.data.local_db.entity.Day
 import com.example.forecasting.data.local_db.entity.FavouriteWeatherResponse
-import com.example.forecasting.data.local_db.entity.FutureWeatherResponse
-import com.example.forecasting.ui.alarm.AlarmEntity
+import com.example.forecasting.data.local_db.entity.AlarmEntity
 
 interface WeatherRepository {
     //current
@@ -16,7 +13,8 @@ interface WeatherRepository {
     suspend fun getAllAlarms():List<AlarmEntity>
     suspend fun insertAlarm(alarmEntity: AlarmEntity):Long
      fun deleteAlarm(id:Int)
-    fun getAlarmById(id:Int):AlarmEntity
+    fun getAlarmById(id:Int): AlarmEntity
+
 
  //favourite
     fun getAllFavouritesWithoutLiveData(): List<FavouriteWeatherResponse>

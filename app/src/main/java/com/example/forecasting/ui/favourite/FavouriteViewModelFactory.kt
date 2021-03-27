@@ -2,7 +2,7 @@ package com.example.forecasting.ui.favourite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.forecasting.data.repository.WeatherRepository
+import com.example.forecasting.domain.repo.WeatherRepository
 
 class FavouriteViewModelFactory(
     private val weatherRepository: WeatherRepository

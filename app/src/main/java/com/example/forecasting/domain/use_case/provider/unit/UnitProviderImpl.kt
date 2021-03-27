@@ -1,16 +1,17 @@
-package com.example.forecasting.data.provider
+package com.example.forecasting.domain.use_case.provider.unit
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.example.forecasting.data.provider.enums.TempUnitSystem
-import com.example.forecasting.data.provider.enums.WindUnitSystem
+import com.example.forecasting.domain.use_case.enums.TempUnitSystem
+import com.example.forecasting.domain.use_case.enums.WindUnitSystem
 
 //key in preference xml file
 const val UNIT_SYSTEM = "UNIT_SYSTEM"
 const val TEMP_UNIT_SYSTEM= "TEMP_UNIT_SYSTEM"
 const val Wind_UNIT_SYSTEM= "Wind_UNIT_SYSTEM"
-class UnitProviderImpl(context: Context) : UnitProvider {
+class UnitProviderImpl(context: Context) :
+    UnitProvider {
     private val appContext = context.applicationContext
     private val preferences: SharedPreferences
         get() = PreferenceManager.getDefaultSharedPreferences(appContext)

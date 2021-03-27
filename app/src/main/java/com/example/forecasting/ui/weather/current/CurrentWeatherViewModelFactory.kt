@@ -2,8 +2,8 @@ package com.example.forecasting.ui.weather.current
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.forecasting.data.provider.UnitProvider
-import com.example.forecasting.data.repository.WeatherRepository
+import com.example.forecasting.domain.use_case.provider.unit.UnitProvider
+import com.example.forecasting.domain.repo.WeatherRepository
 
 
 class CurrentWeatherViewModelFactory(

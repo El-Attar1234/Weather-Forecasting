@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.forecasting.R
+import com.example.forecasting.databinding.AlarmFragmentBinding
 import com.example.forecasting.ui.favourite.FavouriteListAdapter
 import com.example.forecasting.ui.weather.current.CurrentWeatherViewModel
 import com.example.forecasting.ui.weather.current.CurrentWeatherViewModelFactory
@@ -25,16 +26,15 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
 
-class AlarmFragment : Fragment(), KodeinAware {
+class AlarmFragment : Fragment(R.layout.alarm_fragment), KodeinAware {
     override val kodein by closestKodein()
     private val viewModelFactory: AlarmViewModelFactory by instance()
     private lateinit var viewModel: AlarmViewModel
+ private lateinit var binding:AlarmFragmentBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.alarm_fragment, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding= AlarmFragmentBinding.bind(view)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -49,11 +49,10 @@ class AlarmFragment : Fragment(), KodeinAware {
     }
 
     private fun initializeUi(adapter: AlarmListAdapter) {
-        alarm_recycler_view.adapter = adapter
-        alarm_recycler_view.layoutManager =
+       binding.alarmRecyclerView.adapter = adapter
+        binding.alarmRecyclerView.layoutManager =
             LinearLayoutManager(activity)
-        alarm_recycler_view.setHasFixedSize(true)
-        Log.i("alarm_list", "initializeUi: ")
+        binding.alarmRecyclerView.setHasFixedSize(true)
         viewModel.alamListLiveData.observe(viewLifecycleOwner, Observer {
             adapter.setList(it)
 
@@ -95,7 +94,6 @@ class AlarmFragment : Fragment(), KodeinAware {
     override fun onStart() {
         super.onStart()
         viewModel.getAllArams()
-        Log.i("radio", "onStart: ")
     }
 
     private fun openAlarmSettings(alarmId: Int) {

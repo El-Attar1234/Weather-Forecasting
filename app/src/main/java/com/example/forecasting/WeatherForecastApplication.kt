@@ -3,25 +3,25 @@ package com.example.forecasting
 import android.app.Application
 import android.content.Context
 import androidx.preference.PreferenceManager
-import com.example.forecasting.data.local_db.WeatherDataBase
+import com.example.forecasting.data.local_db.db.WeatherDataBase
+import com.example.forecasting.data.local_db.local_data_source.LocalDataSource
+import com.example.forecasting.data.local_db.local_data_source.LocalDataSourceImpl
 import com.example.forecasting.data.network.connection_interceptor.ConnectivityInterceptor
 import com.example.forecasting.data.network.connection_interceptor.ConnectivityInterceptorImpl
 import com.example.forecasting.data.network.OpenWeatherApiService
 import com.example.forecasting.data.network.data_source.WeatherDataSource
 import com.example.forecasting.data.network.data_source.WeatherDataSourceImpl
-import com.example.forecasting.data.provider.LocationProvider
-import com.example.forecasting.data.provider.LocationProviderImpl
-import com.example.forecasting.data.provider.UnitProvider
-import com.example.forecasting.data.provider.UnitProviderImpl
-import com.example.forecasting.data.repository.WeatherRepository
-import com.example.forecasting.data.repository.WeatherRepositoryImpl
+import com.example.forecasting.domain.use_case.provider.location.LocationProvider
+import com.example.forecasting.domain.use_case.provider.location.LocationProviderImpl
+import com.example.forecasting.domain.use_case.provider.unit.UnitProvider
+import com.example.forecasting.domain.use_case.provider.unit.UnitProviderImpl
+import com.example.forecasting.domain.repo.WeatherRepository
+import com.example.forecasting.domain.repo.WeatherRepositoryImpl
 import com.example.forecasting.ui.alarm.alarm_list.AlarmViewModelFactory
 import com.example.forecasting.ui.alarm.alarm_seetings.AlarmSettingsViewModelFactory
-import com.example.forecasting.ui.design.DetailsFragmentViewModelFactory
+import com.example.forecasting.ui.weather_details.DetailsFragmentViewModelFactory
 import com.example.forecasting.ui.favourite.FavouriteViewModelFactory
 import com.example.forecasting.ui.weather.current.CurrentWeatherViewModelFactory
-import com.example.forecasting.ui.weather.current.GpsLocationProvider
-import com.example.forecasting.ui.weather.current.GpsLocationProviderImpl
 import com.google.android.gms.location.LocationServices
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.kodein.di.Kodein
@@ -37,10 +37,11 @@ class WeatherForecastApplication : Application(), KodeinAware {
         //inject things such as context and different services and any thing related to android
         import(androidXModule(this@WeatherForecastApplication))
         //due to type inference context will be passed
-        bind() from singleton { WeatherDataBase(instance()) }
-        bind() from singleton { instance<WeatherDataBase>().currentWeatherDao() }
-        bind() from singleton { instance<WeatherDataBase>().alarmDao() }
-        bind() from singleton { instance<WeatherDataBase>().favouriteDao() }
+        bind() from singleton {
+            WeatherDataBase(
+                instance()
+            )
+        }
         //due to type inference context will be passed
         bind<ConnectivityInterceptor>() with singleton {
             ConnectivityInterceptorImpl(
@@ -49,12 +50,16 @@ class WeatherForecastApplication : Application(), KodeinAware {
         }
         bind() from singleton { OpenWeatherApiService(instance()) }
         bind<WeatherDataSource>() with singleton { WeatherDataSourceImpl(instance()) }
+        bind<LocalDataSource>() with singleton { LocalDataSourceImpl(instance()) }
         bind() from provider { LocationServices.getFusedLocationProviderClient(instance<Context>()) }
-        bind<LocationProvider>() with singleton { LocationProviderImpl(instance(), instance()) }
+        bind<LocationProvider>() with singleton {
+            LocationProviderImpl(
+                instance(),
+                instance()
+            )
+        }
         bind<WeatherRepository>() with singleton {
             WeatherRepositoryImpl(
-                instance(),
-                instance(),
                 instance(),
                 instance(),
                 instance(),
@@ -62,7 +67,11 @@ class WeatherForecastApplication : Application(), KodeinAware {
             )
         }
 
-        bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
+        bind<UnitProvider>() with singleton {
+            UnitProviderImpl(
+                instance()
+            )
+        }
        // bind<GpsLocationProvider>()with singleton { GpsLocationProviderImpl(instance(),instance()) }
         bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
         bind() from provider { FavouriteViewModelFactory(instance()) }

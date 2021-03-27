@@ -2,7 +2,7 @@ package com.example.forecasting.ui.alarm.alarm_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.forecasting.data.repository.WeatherRepository
+import com.example.forecasting.domain.repo.WeatherRepository
 
 class AlarmViewModelFactory(
     private val weatherRepository: WeatherRepository

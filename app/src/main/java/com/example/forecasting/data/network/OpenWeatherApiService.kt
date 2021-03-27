@@ -3,7 +3,6 @@ package com.example.forecasting.data.network
 
 import com.example.forecasting.data.local_db.entity.CurrentweatherResponse
 import com.example.forecasting.data.local_db.entity.FavouriteWeatherResponse
-import com.example.forecasting.data.local_db.entity.FutureWeatherResponse
 import com.example.forecasting.data.network.connection_interceptor.ConnectivityInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -31,13 +30,6 @@ interface OpenWeatherApiService {
 
     ): Deferred<CurrentweatherResponse>
 
-    @GET("onecall")
-    fun getFutureForecast(
-        @Query("lat") lat:String,
-        @Query("lon") lon:String,
-        @Query("exclude") ex:String
-
-    ): Deferred<FutureWeatherResponse>
 
     @GET("onecall")
     fun getFavouriteForecast(

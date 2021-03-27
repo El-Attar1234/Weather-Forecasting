@@ -1,11 +1,10 @@
-package com.example.forecasting.ui.alarm
+package com.example.forecasting.data.local_db.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.forecasting.data.local_db.entity.Day
+import com.example.forecasting.data.local_db.entity.AlarmEntity
 
 
 @Dao
@@ -19,7 +18,7 @@ interface AlarmDao {
     @Query("select * from alarm_table ")
     suspend fun getAllAlarms():List<AlarmEntity>
  @Query("select * from alarm_table where alarm_id=:id")
-  fun getAlarmById(id:Int):AlarmEntity
+  fun getAlarmById(id:Int): AlarmEntity
 
 
 

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forecasting.R
 import com.example.forecasting.data.local_db.entity.Day
-import com.example.forecasting.data.provider.enums.TempUnitSystem
+import com.example.forecasting.domain.use_case.enums.TempUnitSystem
 import com.example.forecasting.utilities.GlideApp
 import com.example.forecasting.utilities.Helpers
 import kotlinx.android.synthetic.main.day_weather.view.*

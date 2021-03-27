@@ -15,11 +15,9 @@ data class FavouriteWeatherResponse(
     val lat: Double,
     val lon: Double,
     val timezone: String,
-    val timezone_offset: Int,
     @Embedded(prefix = "current_")
     val current: Current,
-    val daily: ArrayList<Day>,
-    val hourly: ArrayList<Hour>
+    val daily: ArrayList<Day>
 ) {
     data class Current(
         val dt: Long,

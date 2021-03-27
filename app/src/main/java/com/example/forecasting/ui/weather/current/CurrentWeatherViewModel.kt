@@ -4,8 +4,8 @@ import  android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.forecasting.data.provider.UnitProvider
-import com.example.forecasting.data.repository.WeatherRepository
+import com.example.forecasting.domain.use_case.provider.unit.UnitProvider
+import com.example.forecasting.domain.repo.WeatherRepository
 import com.example.forecasting.utilities.Event
 //import com.example.forecasting.utilities.UnitSystem
 import com.example.forecasting.utilities.lazyDeferred

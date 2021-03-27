@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.*
 import com.example.forecasting.R
-import com.example.forecasting.data.provider.enums.LanguageUnitSystem
 import com.example.forecasting.ui.favourite.MapsActivity
 import java.util.*
 

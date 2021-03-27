@@ -1,11 +1,8 @@
-package com.example.forecasting.ui.design
+package com.example.forecasting.ui.weather_details
 
 import android.location.Geocoder
-import android.opengl.Visibility
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -14,18 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.forecasting.R
-import com.example.forecasting.data.provider.enums.TempUnitSystem
-import com.example.forecasting.data.provider.enums.WindUnitSystem
-import com.example.forecasting.databinding.ActivityMainBinding
+import com.example.forecasting.domain.use_case.enums.TempUnitSystem
+import com.example.forecasting.domain.use_case.enums.WindUnitSystem
 import com.example.forecasting.databinding.FragmentDetailsBinding
-import com.example.forecasting.ui.MainActivity
 import com.example.forecasting.utilities.GlideApp
 import com.example.forecasting.utilities.Helpers
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.current_weather_fragment.*
-import kotlinx.android.synthetic.main.fragment_details.*
-import kotlinx.android.synthetic.main.fragment_details.view.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
@@ -65,20 +55,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details), KodeinAware {
         }
     }
 
-    private fun activateAnimation() {
-        val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.fromsmall)
-        val lociNnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fromloci)
-        binding.cardViewDetails.alpha = 0f
-        binding.fabClose.alpha = 0f
-
-        binding.cardViewDetails.alpha = 1f
-        binding.cardViewDetails.startAnimation(animation)
-
-        binding.fabClose.alpha = 1f
-        binding.fabClose.startAnimation(lociNnimation)
-
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel =
@@ -114,7 +90,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details), KodeinAware {
             updateCity(
                 favLocation.lat,
                 favLocation.lon,
-              favLocation.zonedDateTime.zone.normalized().toString()
+                favLocation.zonedDateTime.zone.normalized().toString()
             )
             updateTemperatures(favLocation.current.temp)
             updateDateToToday(favLocation.current.dt)
@@ -125,6 +101,20 @@ class DetailsFragment : Fragment(R.layout.fragment_details), KodeinAware {
             updateWind(favLocation.current.wind_speed)
             uploadImage(favLocation.current.weather.get(0).icon)
         }
+    }
+
+    private fun activateAnimation() {
+        val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.fromsmall)
+        val lociNnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fromloci)
+        binding.cardViewDetails.alpha = 0f
+        binding.fabClose.alpha = 0f
+
+        binding.cardViewDetails.alpha = 1f
+        binding.cardViewDetails.startAnimation(animation)
+
+        binding.fabClose.alpha = 1f
+        binding.fabClose.startAnimation(lociNnimation)
+
     }
 
     private fun updateCity(lat: Double, lon: Double, location: String) {

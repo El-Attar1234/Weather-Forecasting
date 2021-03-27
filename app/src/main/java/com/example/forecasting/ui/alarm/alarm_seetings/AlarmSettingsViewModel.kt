@@ -2,9 +2,8 @@ package com.example.forecasting.ui.alarm.alarm_seetings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.forecasting.data.repository.WeatherRepository
-import com.example.forecasting.ui.alarm.AlarmEntity
-import com.example.forecasting.ui.alarm.alarm_list.AlarmViewModel
+import com.example.forecasting.domain.repo.WeatherRepository
+import com.example.forecasting.data.local_db.entity.AlarmEntity
 import kotlinx.coroutines.launch
 
 class AlarmSettingsViewModel(private val weatherRepository: WeatherRepository
@@ -17,7 +16,7 @@ class AlarmSettingsViewModel(private val weatherRepository: WeatherRepository
         }
     }
 
-    fun getAlarmById(id:Int):AlarmEntity{
+    fun getAlarmById(id:Int): AlarmEntity {
         return weatherRepository.getAlarmById(id)
     }
     fun deleteAlarm(id:Int){

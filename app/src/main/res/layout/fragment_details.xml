@@ -8,7 +8,7 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:background="@color/colorPrimary"
 android:fitsSystemWindows="true"
-tools:context=".ui.design.DetailsFragment">
+tools:context=".ui.weather_details.DetailsFragment">
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:id="@+id/coordinatorLayout"

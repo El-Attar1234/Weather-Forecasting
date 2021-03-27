@@ -1,17 +1,14 @@
 package com.example.forecasting.ui.weather.current
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forecasting.R
-import com.example.forecasting.data.local_db.entity.Day
 import com.example.forecasting.data.local_db.entity.Hour
-import com.example.forecasting.data.provider.enums.TempUnitSystem
+import com.example.forecasting.domain.use_case.enums.TempUnitSystem
 import com.example.forecasting.utilities.GlideApp
 import com.example.forecasting.utilities.Helpers
-import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.android.synthetic.main.item_weather_hour_of_day.view.*
 import org.threeten.bp.Instant
 import org.threeten.bp.ZoneId

@@ -1,4 +1,4 @@
-package com.example.forecasting.data.provider
+package com.example.forecasting.domain.use_case.provider.location
 
 import com.example.forecasting.data.local_db.entity.CurrentweatherResponse
 

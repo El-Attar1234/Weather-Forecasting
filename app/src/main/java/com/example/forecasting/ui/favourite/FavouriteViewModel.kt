@@ -4,8 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.forecasting.data.local_db.entity.FavouriteWeatherResponse
-import com.example.forecasting.data.repository.WeatherRepository
+import com.example.forecasting.domain.repo.WeatherRepository
 import com.example.forecasting.utilities.Event
 import com.example.forecasting.utilities.lazyDeferred
 

@@ -1,4 +1,4 @@
-package com.example.forecasting.ui.alarm
+package com.example.forecasting.data.local_db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

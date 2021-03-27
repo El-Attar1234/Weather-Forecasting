@@ -1,4 +1,4 @@
-package com.example.forecasting.data.provider.enums
+package com.example.forecasting.domain.use_case.enums
 
 
 enum class TempUnitSystem {

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.forecasting.data.local_db.entity.CurrentweatherResponse
 import com.example.forecasting.data.local_db.entity.Day
 import com.example.forecasting.data.local_db.entity.FavouriteWeatherResponse
-import com.example.forecasting.data.local_db.entity.FutureWeatherResponse
 import com.example.forecasting.data.network.OpenWeatherApiService
 import com.example.forecasting.utilities.NoConnectionException
 
@@ -32,25 +31,6 @@ class WeatherDataSourceImpl(private val openWeatherApiService: OpenWeatherApiSer
         }
     }
 
-    private val myDownloadedFutureWeather = MutableLiveData<List<Day>>()
-
-    override val downloadedFutureWeather: LiveData<List<Day>>
-        get() =myDownloadedFutureWeather
-
-    override suspend fun fetchFutureWeather(lat: String, lon: String, ex: String) {
-        try {
-            Log.i("retrofit", "inside data source for future")
-            val futureResponse = openWeatherApiService.getFutureForecast(lat, lon, ex)
-            // Log.i("retrofit", "inside data source , my return ${currentResponse.await()}")
-            val futureData=futureResponse.await()
-            val list=futureData.daily
-            myDownloadedFutureWeather.postValue(list)
-            // Log.i("retrofit", "after update inside data source , my return ${currentResponse.await()}")
-        } catch (e: NoConnectionException) {
-            Log.i("error", ""+e.message)
-            Log.i("error", "No internet")
-        }
-    }
     private val myDownloadedFavouriteWeather = MutableLiveData<FavouriteWeatherResponse>()
     override val downloadedFavouriteWeather: LiveData<FavouriteWeatherResponse>
         get() = myDownloadedFavouriteWeather

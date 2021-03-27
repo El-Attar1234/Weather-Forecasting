@@ -5,15 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forecasting.R
-import com.example.forecasting.data.local_db.entity.Hour
-import com.example.forecasting.ui.alarm.AlarmEntity
-import com.example.forecasting.ui.weather.current.HourListAdapter
-import com.example.forecasting.utilities.GlideApp
+import com.example.forecasting.data.local_db.entity.AlarmEntity
 import kotlinx.android.synthetic.main.alarm_item.view.*
-import kotlinx.android.synthetic.main.item_weather_hour_of_day.view.*
-import org.threeten.bp.Instant
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZonedDateTime
 
 class AlarmListAdapter (
     private val viewModel:AlarmViewModel

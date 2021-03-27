@@ -1,6 +1,6 @@
 package com.example.forecasting.ui.weather.current
 
-//import com.example.forecasting.data.provider.enums.TempUnitSystem
+//import com.example.forecasting.domain.use_case.enums.TempUnitSystem
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -26,9 +26,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.forecasting.R
-import com.example.forecasting.data.provider.USE_DEVICE_LOCATION
-import com.example.forecasting.data.provider.enums.TempUnitSystem
-import com.example.forecasting.data.provider.enums.WindUnitSystem
+import com.example.forecasting.domain.use_case.provider.location.USE_DEVICE_LOCATION
+import com.example.forecasting.domain.use_case.enums.TempUnitSystem
+import com.example.forecasting.domain.use_case.enums.WindUnitSystem
 import com.example.forecasting.databinding.CurrentWeatherFragmentBinding
 import com.example.forecasting.ui.helpers.ScopedFragment
 import com.example.forecasting.utilities.GlideApp

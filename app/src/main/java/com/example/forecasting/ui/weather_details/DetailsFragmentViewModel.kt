@@ -1,14 +1,14 @@
-package com.example.forecasting.ui.design
+package com.example.forecasting.ui.weather_details
 
 import androidx.lifecycle.ViewModel
 import com.example.forecasting.data.local_db.entity.CurrentweatherResponse
 import com.example.forecasting.data.local_db.entity.FavouriteWeatherResponse
-import com.example.forecasting.data.provider.UnitProvider
-import com.example.forecasting.data.repository.WeatherRepository
+import com.example.forecasting.domain.use_case.provider.unit.UnitProvider
+import com.example.forecasting.domain.repo.WeatherRepository
 
 class DetailsFragmentViewModel
     (private val weatherRepository: WeatherRepository,
-                               unitProvider: UnitProvider
+     unitProvider: UnitProvider
 ): ViewModel() {
 
     val tempUnitSystem = unitProvider.getTempUnitSystem()
