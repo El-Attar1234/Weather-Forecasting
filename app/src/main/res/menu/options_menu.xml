@@ -5,7 +5,7 @@
     <item
         android:id="@+id/radarFragment"
         android:title="@string/radar"
-        android:icon="@drawable/radar4"
+        android:icon="@drawable/radar5"
         app:showAsAction="always" />
 
     <item

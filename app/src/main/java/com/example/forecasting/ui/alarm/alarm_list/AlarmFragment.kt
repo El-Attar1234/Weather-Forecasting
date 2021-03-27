@@ -53,6 +53,8 @@ class AlarmFragment : Fragment(R.layout.alarm_fragment), KodeinAware {
         binding.alarmRecyclerView.layoutManager =
             LinearLayoutManager(activity)
         binding.alarmRecyclerView.setHasFixedSize(true)
+
+
         viewModel.alamListLiveData.observe(viewLifecycleOwner, Observer {
             adapter.setList(it)
 

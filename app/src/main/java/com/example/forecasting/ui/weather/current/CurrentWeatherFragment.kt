@@ -162,6 +162,7 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
             cityName = location
         }
         binding.tvCity.text = cityName
+        (activity as? AppCompatActivity)?.supportActionBar?.title =cityName
     }
 
     private fun updateWind(windSpeed: Double) {
@@ -180,7 +181,7 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun updateLocation(location: String) {
-        (activity as? AppCompatActivity)?.supportActionBar?.title = location
+      //  (activity as? AppCompatActivity)?.supportActionBar?.title = location
 
 
     }
@@ -196,6 +197,7 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         val instant = Instant.ofEpochSecond(dt)
         val zoneId = ZoneId.of("UTC").normalized()
         binding.date.text = ZonedDateTime.ofInstant(instant, zoneId).toLocalDate().toString()
+
     }
 
     private fun updateTemperatures(temperature: Double) {

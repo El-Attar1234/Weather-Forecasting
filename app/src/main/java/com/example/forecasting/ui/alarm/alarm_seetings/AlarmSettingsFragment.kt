@@ -56,6 +56,7 @@ class AlarmSettingsFragment : Fragment(R.layout.fragment_alarm_settings), Kodein
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         (activity as? AppCompatActivity)?.supportActionBar?.show()
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle =null
         viewModel =
             ViewModelProvider(this, viewModelFactory).get(AlarmSettingsViewModel::class.java)
         if (args.alarmId != -1) {
@@ -169,7 +170,7 @@ class AlarmSettingsFragment : Fragment(R.layout.fragment_alarm_settings), Kodein
             val uploadWorkRequest = OneTimeWorkRequestBuilder<AlarmWorker>()
                 .setInputData(inputData)
                 //.setConstraints(alarmConstraints)
-                .setInitialDelay(diffTime.toLong(), TimeUnit.SECONDS)
+                .setInitialDelay(50, TimeUnit.SECONDS)
                 .build()
             WorkManager.getInstance(requireContext()).enqueue(uploadWorkRequest)
             navigateToAlarmList()

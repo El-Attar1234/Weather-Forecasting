@@ -26,15 +26,13 @@ class AlarmWorker(context: Context, workerParams: WorkerParameters) : Worker(con
     KodeinAware {
     override val kodein: Kodein by closestKodein { context }
     private val weatherRepository: WeatherRepository by instance()
-
     private val context = context.applicationContext as Application
+
     override fun doWork(): Result {
         val type = inputData.getString("type")
         val desc = inputData.getString("description")
         val key = inputData.getInt("key", 100)
         val index = inputData.getInt("index", -1)
-        val db =
-            WeatherDataBase(context)
 
         val main_description =
             weatherRepository.getCurrentWeatherResponseWithoutLiveData().current.weather.get(0).main
@@ -45,7 +43,7 @@ class AlarmWorker(context: Context, workerParams: WorkerParameters) : Worker(con
             var mMediaPlayer = MediaPlayer.create(context, R.raw.alarm_sound)
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
             mMediaPlayer.start()
-            Thread.sleep(10000)
+            Thread.sleep(6000)
             mMediaPlayer.stop()
         }
         weatherRepository.deleteAlarm(key)

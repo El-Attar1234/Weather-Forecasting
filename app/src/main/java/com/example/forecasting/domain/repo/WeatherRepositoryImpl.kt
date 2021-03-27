@@ -105,37 +105,32 @@ class WeatherRepositoryImpl(
 
 
     }
-
+    override fun getCurrentWeatherResponseWithoutLiveData(): CurrentweatherResponse {
+        return localDataSource.currentDao().getCurrentWeatherResponseWithoutLiveData()
+    }
     private fun isFetchCurrentNeeded(lastFetchTime: ZonedDateTime): Boolean {
         val thirtyMinutesAgo = ZonedDateTime.now().minusMinutes(30)
         return lastFetchTime.isBefore(thirtyMinutesAgo)
     }
 
-
+    //alarm related
     override suspend fun getAllAlarms(): List<AlarmEntity> {
         return localDataSource.alarmDao().getAllAlarms()
     }
-
     override suspend fun insertAlarm(alarmEntity: AlarmEntity): Long {
         return localDataSource.alarmDao().insertAlarm(alarmEntity)
     }
-
     override fun deleteAlarm(id: Int) {
         localDataSource.alarmDao().deleteAlarm(id)
     }
-
-    override fun getCurrentWeatherResponseWithoutLiveData(): CurrentweatherResponse {
-        return localDataSource.currentDao().getCurrentWeatherResponseWithoutLiveData()
-    }
-
     override fun getAlarmById(id: Int): AlarmEntity {
         return localDataSource.alarmDao().getAlarmById(id)
     }
 
+
     override fun getAllFavouritesWithoutLiveData(): List<FavouriteWeatherResponse> {
         return localDataSource.favDao().getAllFavouritesWithoutLiveData()
     }
-
     override fun deleteFavouriteLocation(id: String) {
         localDataSource.favDao().deleteFavouriteLocation(id)
     }

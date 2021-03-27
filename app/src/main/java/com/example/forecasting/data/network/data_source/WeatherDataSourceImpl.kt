@@ -24,7 +24,6 @@ class WeatherDataSourceImpl(private val openWeatherApiService: OpenWeatherApiSer
             val response=currentResponse.await()
             Log.i("future", "inside data source , my return ${response}")
             myDownloadedCurrentWeather.postValue(response)
-           // Log.i("retrofit", "after update inside data source , my return ${currentResponse.await()}")
         } catch (e: NoConnectionException) {
             Log.i("error", ""+e)
             Log.i("error", "No internet")

@@ -65,8 +65,8 @@
     <fragment
         android:id="@+id/alarmSettingsFragment"
         android:name="com.example.forecasting.ui.alarm.alarm_seetings.AlarmSettingsFragment"
-        android:label="fragment_alarm_settings"
-        tools:layout="@layout/fragment_alarm_settings" >
+        android:label="ِAlarm Settings"
+        tools:layout="@layout/fragment_alarm_settings">
         <argument
             android:name="alarm_id"
             app:argType="integer" />
