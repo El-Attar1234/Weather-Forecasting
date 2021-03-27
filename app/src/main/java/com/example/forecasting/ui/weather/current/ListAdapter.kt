@@ -1,25 +1,15 @@
-package com.example.forecasting.ui.weather.weak_forecast.day_list
+package com.example.forecasting.ui.weather.current
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.forecasting.R
-import com.example.forecasting.data.local_db.entity.CurrentweatherResponse
 import com.example.forecasting.data.local_db.entity.Day
 import com.example.forecasting.data.provider.enums.TempUnitSystem
-import com.example.forecasting.ui.weather.current.CurrentWeatherFragmentDirections
-import com.example.forecasting.ui.weather.current.CurrentWeatherFragmentDirections.detailsAction
-import com.example.forecasting.ui.weather.current.CurrentWeatherViewModel
 import com.example.forecasting.utilities.GlideApp
 import com.example.forecasting.utilities.Helpers
-import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.android.synthetic.main.day_weather.view.*
 import org.threeten.bp.Instant
 import org.threeten.bp.ZoneId

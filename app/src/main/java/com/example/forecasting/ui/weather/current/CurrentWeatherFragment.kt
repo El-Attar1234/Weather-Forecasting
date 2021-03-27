@@ -14,11 +14,9 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
@@ -31,8 +29,8 @@ import com.example.forecasting.R
 import com.example.forecasting.data.provider.USE_DEVICE_LOCATION
 import com.example.forecasting.data.provider.enums.TempUnitSystem
 import com.example.forecasting.data.provider.enums.WindUnitSystem
+import com.example.forecasting.databinding.CurrentWeatherFragmentBinding
 import com.example.forecasting.ui.helpers.ScopedFragment
-import com.example.forecasting.ui.weather.weak_forecast.day_list.ListAdapter
 import com.example.forecasting.utilities.GlideApp
 import com.example.forecasting.utilities.Helpers
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -58,9 +56,9 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
     override val kodein by closestKodein()
     private val viewModelFactory: CurrentWeatherViewModelFactory by instance()
     private val fusedLocationClient: FusedLocationProviderClient by instance()
-
     private lateinit var viewModel: CurrentWeatherViewModel
-    private lateinit var prefEditor: SharedPreferences.Editor
+    private lateinit var binding: CurrentWeatherFragmentBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,14 +67,9 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         return inflater.inflate(R.layout.current_weather_fragment, container, false)
     }
 
-
-    override fun onStart() {
-        super.onStart()
-        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        if (preferences.getBoolean(USE_DEVICE_LOCATION, true)) {
-            getLastLocation()
-        }
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = CurrentWeatherFragmentBinding.bind(view)
     }
 
 
@@ -89,177 +82,22 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(CurrentWeatherViewModel::class.java)
         val adapter = HourListAdapter(viewModel)
-        val dayAdapter = ListAdapter(viewModel)
+        val dayAdapter =
+            ListAdapter(viewModel)
         initializeUi(adapter, dayAdapter)
 
     }
 
-    @SuppressLint("MissingPermission")
-    private fun getLastLocation() {
-        if (checkPermissions()) {
-
-            if (isProviderEnabled()) {
-                fusedLocationClient?.lastLocation
-                    ?.addOnCompleteListener(requireActivity()) { task ->
-                        val location = task.result
-                        if (location == null) {
-                            requestNewLocation()
-                        } else {
-                            var latitude = location.latitude
-                            var longitude = location.longitude
-                            val sharedPref =
-                                requireContext().applicationContext.getSharedPreferences(
-                                    "location",
-                                    Context.MODE_PRIVATE
-                                )
-                            val editor: SharedPreferences.Editor = sharedPref.edit()
-                            editor.putString("MYLAT", latitude.toString())
-                            editor.putString("MYLONG", longitude.toString())
-                            editor.apply()
-                            val geocoder = Geocoder(activity)
-                            try {
-                                val totalAdress = geocoder.getFromLocation(latitude, longitude, 1)
-                                var address = totalAdress[0].getAddressLine(0)
-                                Toast.makeText(activity, address, Toast.LENGTH_LONG)
-                                    .show()
-                            } catch (e: IOException) {
-                                e.printStackTrace()
-                            }
-                        }
-                    }
-
-
-            } else {
-                Log.i("gps", "willOpenGpsActivity")
-                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivity(intent)
-            }
-        } else {
-
-            Log.i("gps1", "no CheckPermission: ")
-            requestPermission()
-        }
-
-
-    }
-
-    private fun isProviderEnabled(): Boolean {
-        Log.i("gps", "isProvidedEnabled")
-        var locMgr = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locMgr.isProviderEnabled(LocationManager.GPS_PROVIDER)
-
-    }
-
-    private fun checkPermissions(): Boolean {
-        Log.i("gps1", "checkPermissions")
-        var isPermissioned = false
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-            && (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-                    == PackageManager.PERMISSION_GRANTED)
-        ) {
-            isPermissioned = true
-            Log.i("gps", "checkPermissions: " + "it's permissioned")
-        }
-
-        return isPermissioned
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_GPS_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                Log.i("gps2", "فتحت الgps")
-                getLastLocation()
-            }
-
-        }
-    }
-
-    private fun requestPermission() {
-        Log.i("gps", "requestPermission ")
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            ,
-            REQUEST_PERMISSIONS_REQUEST_CODE
-        )
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.i("gps", "requestPermissionResult ")
-        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getLastLocation()
-            } else {
-                //show dialog
-                requestPermission();
-
-            }
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun requestNewLocation() {
-        Log.i("gps1", "requestNewLocation: ")
-        val locationRequest = LocationRequest.create()
-        locationRequest.interval = 10
-        //   locationRequest.setFastestInterval(5000);
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.numUpdates = 1
-        if (checkPermissions()) {
-            fusedLocationClient!!.requestLocationUpdates(
-                locationRequest,
-                mLocationCallback,
-                Looper.myLooper()
-            )
-        }
-    }
-
-    private val mLocationCallback: LocationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            Log.i("gps", "LocationCallBack")
-            super.onLocationResult(locationResult)
-            Log.i("location", "onLocationResult: ")
-
-            val location = locationResult.lastLocation
-            if (location != null && locationResult.locations.size > 0) {
-                val latitude = location.latitude
-                val longitude = location.longitude
-                val sharedPref =
-                    requireContext().getSharedPreferences("location", Context.MODE_PRIVATE)
-                val editor: SharedPreferences.Editor = sharedPref.edit()
-                editor.putString("MYLAT", latitude.toString())
-                editor.putString("MYLONG", longitude.toString())
-                editor.apply()
-            }
-
-        }
-    }
 
     private fun initializeUi(adapter: HourListAdapter, dayadapter: ListAdapter) {
-        hour_Forecast_recyclerview.adapter = adapter
-        hour_Forecast_recyclerview.layoutManager =
+        binding.hourForecastRecyclerview.adapter = adapter
+        binding.hourForecastRecyclerview.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        hour_Forecast_recyclerview.setHasFixedSize(true)
-
-        day_Forecast_recyclerview.adapter = dayadapter
-        day_Forecast_recyclerview.layoutManager =
+        binding.hourForecastRecyclerview.setHasFixedSize(true)
+        binding.dayForecastRecyclerview.adapter = dayadapter
+        binding.dayForecastRecyclerview.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        day_Forecast_recyclerview.setHasFixedSize(true)
+        binding.dayForecastRecyclerview.setHasFixedSize(true)
 
 
         viewModel.getNavigation.observe(this@CurrentWeatherFragment.viewLifecycleOwner, Observer {
@@ -289,14 +127,14 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
                         updateHumidity(it.current.humidity)
                         updateVisibility(it.current.visibility)
                         updateWind(it.current.wind_speed)
-                        updateCity(it.lat, it.lon,it.zonedDateTime.zone.normalized().toString())
+                        updateCity(it.lat, it.lon, it.zonedDateTime.zone.normalized().toString())
                         if (Helpers.isNetworkAvailable(requireContext())) {
                             GlideApp.with(this@CurrentWeatherFragment)
                                 .load("https://openweathermap.org/img/wn/${it.current.weather.get(0).icon}@2x.png")
                                 .into(imageView_condition_icon)
                         }
-                        group_success.visibility = View.VISIBLE
-                        group_loading.visibility = View.INVISIBLE
+                        binding.groupSuccess.visibility = View.VISIBLE
+                        binding.groupLoading.visibility = View.INVISIBLE
                     }
 
                 }
@@ -305,31 +143,26 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         }
     }
 
-    private fun updateCity(lat: Double, lon: Double,location: String) {
+    private fun updateCity(lat: Double, lon: Double, location: String) {
         val geocoder = Geocoder(activity)
         var cityName = location
         try {
             val totalAdress = geocoder.getFromLocation(lat, lon, 10)
-            // var address = totalAdress[0].getAddressLine(0)
-            if(totalAdress != null && totalAdress.size>0){
-                for(adress in totalAdress){
+
+            if (totalAdress != null && totalAdress.size > 0) {
+                for (adress in totalAdress) {
                     if (adress.subAdminArea != null) {
-                        cityName =adress.subAdminArea
+                        cityName = adress.subAdminArea
                     }
                 }
 
             }
 
         } catch (e: IOException) {
-            cityName =location
+            cityName = location
         }
-        tvCity.text = cityName
+        binding.tvCity.text = cityName
     }
-
-
-
-
-
 
     private fun updateWind(windSpeed: Double) {
         var abbreviation = "m/s"
@@ -343,9 +176,8 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
             wind = wind * 3.6
         }
 
-        textView_wind.text = " " + wind.toInt() + abbreviation
+        binding.textViewWind.text = " " + wind.toInt() + abbreviation
     }
-
 
     private fun updateLocation(location: String) {
         (activity as? AppCompatActivity)?.supportActionBar?.title = location
@@ -354,15 +186,16 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun updateDateToToday(dt: Long) {
-        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = requireContext().resources.getString(
-            requireContext().resources.getIdentifier(
-                "today_label", "string",
-                requireContext().packageName
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle =
+            requireContext().resources.getString(
+                requireContext().resources.getIdentifier(
+                    "today_label", "string",
+                    requireContext().packageName
+                )
             )
-        )
         val instant = Instant.ofEpochSecond(dt)
         val zoneId = ZoneId.of("UTC").normalized()
-        date.text = ZonedDateTime.ofInstant(instant, zoneId).toLocalDate().toString()
+        binding.date.text = ZonedDateTime.ofInstant(instant, zoneId).toLocalDate().toString()
     }
 
     private fun updateTemperatures(temperature: Double) {
@@ -375,25 +208,175 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
             abbreviation = " °F"
             temp = ((temp - 273.15) * 9 / 5) + (32)
         }
-        textView_temperature.text = " " + temp.toInt() + abbreviation
+        binding.textViewTemperature.text = " " + temp.toInt() + abbreviation
     }
 
     private fun updateCondition(condition: String) {
-        textView_condition.text = condition
+        binding.textViewCondition.text = condition
     }
 
-
     private fun updatePressure(pressure: Int) {
-        textView_pressure.text = "$pressure hpa"
+        binding.textViewPressure.text = "$pressure hpa"
     }
 
     private fun updateHumidity(humidity: Int) {
-        textView_humidity.text = " $humidity %"
+        binding.textViewHumidity.text = " $humidity %"
     }
 
     private fun updateVisibility(visibilityDistance: Int) {
-        textView_visibility.text = "$visibilityDistance m"
+        binding.textViewVisibility.text = "$visibilityDistance m"
     }
 
 
+    @SuppressLint("MissingPermission")
+    private fun getLastLocation() {
+        if (checkPermissions()) {
+            if (isProviderEnabled()) {
+                fusedLocationClient?.lastLocation
+                    ?.addOnCompleteListener(requireActivity()) { task ->
+                        val location = task.result
+                        if (location == null) {
+                            requestNewLocation()
+                        } else {
+                            var latitude = location.latitude
+                            var longitude = location.longitude
+                            val sharedPref =
+                                requireContext().applicationContext.getSharedPreferences(
+                                    "location",
+                                    Context.MODE_PRIVATE
+                                )
+                            val editor: SharedPreferences.Editor = sharedPref.edit()
+                            editor.putString("MYLAT", latitude.toString())
+                            editor.putString("MYLONG", longitude.toString())
+                            editor.apply()
+                            val geocoder = Geocoder(activity)
+                            try {
+                                val totalAdress = geocoder.getFromLocation(latitude, longitude, 1)
+                                var address = totalAdress[0].getAddressLine(0)
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                            }
+                        }
+                    }
+
+
+            } else {
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        } else {
+            requestPermission()
+        }
+
+
+    }
+
+    private fun isProviderEnabled(): Boolean {
+        var locMgr = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locMgr.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+    }
+
+    private fun checkPermissions(): Boolean {
+        var isPermissioned = false
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+            && (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+                    == PackageManager.PERMISSION_GRANTED)
+        ) {
+            isPermissioned = true
+        }
+
+        return isPermissioned
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_GPS_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                getLastLocation()
+            }
+
+        }
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            ,
+            REQUEST_PERMISSIONS_REQUEST_CODE
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLastLocation()
+            } else {
+                requestPermission();
+
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestNewLocation() {
+        val locationRequest = LocationRequest.create()
+        locationRequest.interval = 10
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.numUpdates = 1
+        if (checkPermissions()) {
+            fusedLocationClient!!.requestLocationUpdates(
+                locationRequest,
+                mLocationCallback,
+                Looper.myLooper()
+            )
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        if (preferences.getBoolean(USE_DEVICE_LOCATION, true)) {
+            getLastLocation()
+        }
+
+    }
+
+    private val mLocationCallback: LocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            super.onLocationResult(locationResult)
+
+            val location = locationResult.lastLocation
+            if (location != null && locationResult.locations.size > 0) {
+                val latitude = location.latitude
+                val longitude = location.longitude
+                val sharedPref =
+                    requireContext().getSharedPreferences("location", Context.MODE_PRIVATE)
+                val editor: SharedPreferences.Editor = sharedPref.edit()
+                editor.putString("MYLAT", latitude.toString())
+                editor.putString("MYLONG", longitude.toString())
+                editor.apply()
+            }
+
+        }
+    }
 }
+
+
+
+

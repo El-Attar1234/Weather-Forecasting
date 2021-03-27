@@ -20,7 +20,8 @@ import com.example.forecasting.ui.alarm.alarm_seetings.AlarmSettingsViewModelFac
 import com.example.forecasting.ui.design.DetailsFragmentViewModelFactory
 import com.example.forecasting.ui.favourite.FavouriteViewModelFactory
 import com.example.forecasting.ui.weather.current.CurrentWeatherViewModelFactory
-import com.example.forecasting.ui.weather.weak_forecast.day_list.FutureListViewModelFactory
+import com.example.forecasting.ui.weather.current.GpsLocationProvider
+import com.example.forecasting.ui.weather.current.GpsLocationProviderImpl
 import com.google.android.gms.location.LocationServices
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.kodein.di.Kodein
@@ -31,15 +32,15 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 
-class WeatherForecastApplication:Application() , KodeinAware {
-    override val kodein= Kodein.lazy {
+class WeatherForecastApplication : Application(), KodeinAware {
+    override val kodein = Kodein.lazy {
         //inject things such as context and different services and any thing related to android
         import(androidXModule(this@WeatherForecastApplication))
-       //due to type inference context will be passed
+        //due to type inference context will be passed
         bind() from singleton { WeatherDataBase(instance()) }
         bind() from singleton { instance<WeatherDataBase>().currentWeatherDao() }
-      bind() from singleton { instance<WeatherDataBase>().alarmDao()}
-        bind() from singleton { instance<WeatherDataBase>().favouriteDao()}
+        bind() from singleton { instance<WeatherDataBase>().alarmDao() }
+        bind() from singleton { instance<WeatherDataBase>().favouriteDao() }
         //due to type inference context will be passed
         bind<ConnectivityInterceptor>() with singleton {
             ConnectivityInterceptorImpl(
@@ -49,18 +50,26 @@ class WeatherForecastApplication:Application() , KodeinAware {
         bind() from singleton { OpenWeatherApiService(instance()) }
         bind<WeatherDataSource>() with singleton { WeatherDataSourceImpl(instance()) }
         bind() from provider { LocationServices.getFusedLocationProviderClient(instance<Context>()) }
-        bind<LocationProvider>() with singleton { LocationProviderImpl(instance(),instance()) }
-        bind<WeatherRepository>() with singleton {WeatherRepositoryImpl(instance(),instance(),instance(),instance(),instance(),instance()) }
+        bind<LocationProvider>() with singleton { LocationProviderImpl(instance(), instance()) }
+        bind<WeatherRepository>() with singleton {
+            WeatherRepositoryImpl(
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
 
         bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
+       // bind<GpsLocationProvider>()with singleton { GpsLocationProviderImpl(instance(),instance()) }
         bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
         bind() from provider { FavouriteViewModelFactory(instance()) }
-        bind() from provider { DetailsFragmentViewModelFactory(instance(),instance()) }
+        bind() from provider { DetailsFragmentViewModelFactory(instance(), instance()) }
         bind() from provider { AlarmViewModelFactory(instance()) }
         bind() from provider { AlarmSettingsViewModelFactory(instance()) }
-        bind() from provider { FutureListViewModelFactory(instance(), instance()) }
     }
-
 
 
     override fun onCreate() {
